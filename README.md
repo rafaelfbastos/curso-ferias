@@ -24,6 +24,31 @@ PORT='Change-me'
 
 ```
 
+## Comandos úteis:
+
+*Criar ambiente virtual* 
+`python -m venv .venv`
+
+*Ativar ambiente virtual* 
+`.\.venv\Scripts\activate`
+
+*Instalar dependências* 
+`pip install -r requirements.txt`
+
+*Autualizar o arquivo requirements.txt* 
+`pip freeze > requirements.txt`
+
+*Iniciar servidor* 
+`python manage.py runserver`
+
+*Fazer Migrations* 
+`python manage.py makemigrations`
+
+*Migar para banco de dados* 
+`python manage.py migrate`
+
+*Criar superusuário* 
+`python manage.py createsuperuser`
 
 
 
