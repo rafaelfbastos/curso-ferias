@@ -6,6 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ user.username }}</h1>
+    {% for topico in topicos %}
+
+        <h1>{{topico.titulo}}</h1>
+        <h2>{{topico.descricao}}</h2>
+        <h2>{{topico.user.username}}</h2>
+
+        {% for tag in topico.tag.all %}
+            <span>{{tag}} </span>
+        {% endfor %}
+
+    
+    {% endfor %}
 </body>
 </html>
