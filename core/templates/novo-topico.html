@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+{% endblock  %}
+{% block content %}
+
+<div>
+    {% include "nav.html" %}
+</div>
+<div class="container  text-center mt-5">
+    <h1 class="pt-5 text-dark">Fórrum</h1>
+</div>
+<div class="container mt-5">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-secondary">Responder</button>
+    </form>
+</div>
+{% endblock  %}

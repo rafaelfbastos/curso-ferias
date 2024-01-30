@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+{% endblock  %}
+{% block content %}
+
+<div>
+    {% include "nav.html" %}
+</div>
+<div class="container  text-center mt-5">
+    <h1 class="pt-5 text-dark">Fórrum</h1>
+</div>
+<div class="container mt-5">
+    <div class="row align-items-start">
+        <div class="col-8 mt-3">
+            {% include "topicos-card.html" %}
+            
+            <div class="container">
+                <div class="card mb-3">
+                    <div class="card-body py-4">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <textarea class="form-control" id="exampleFormControlTextarea1" name="post" rows="3"></textarea>
+                            </div>
+                            {% if user.is_authenticated %}
+                                <button type="submit" class="btn btn-secondary">Responder</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-secondary"disabled>Responder</button>
+                            {% endif %}
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+                 
+            
+            {% for post in topico.post_set.all  %}
+                {% include "post-card.html" %}
+            {% endfor %}
+        </div>
+        <div class="col-4 mt-3">
+          side
+        </div>
+    </div>
+</div>
+{% endblock  %}

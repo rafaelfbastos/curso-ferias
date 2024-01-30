@@ -1,22 +1,83 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% for topico in topicos %}
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+{% endblock  %}
+{% block content %}
 
-        <h1>{{topico.titulo}}</h1>
-        <h2>{{topico.descricao}}</h2>
-        <h2>{{topico.user.username}}</h2>
+<div>
+    {% include "nav.html" %}
+</div>
+<div class="container  text-center mt-5">
+    {% bootstrap_messages %}
+    <h1 class="pt-5 text-dark">Fórrum</h1>
+</div>
+<div class="container mt-5">
+    <div class="row align-items-start">
+        <div class="col-8 mt-3">
+            {% for topico in topicos %}
+                {% include "topicos-card.html" %}
+            {% endfor %}
+          <div class="pagination justify-content-center">
+            {% bootstrap_pagination page_obj %}
+          </div>
+        </div>
+        <div class="col-4 mt-3">
+            {% if user.is_authenticated %}
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#topicoModal">
+                    Noco Tópico
+                </button>
+              </div>
+            {% else %}
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#topicoModal" disabled>
+                    Noco Tópico
+                </button>
+              </div>
+            {% endif %}
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <form action="{% url "pesquisa" %}" method="get">
+                            <div class="input-group mb-3 mx-3">
+                                <input type="text" class="form-control" name="tag" placeholder="Buscar" aria-label="Digite sua busca" aria-describedby="button-addon2">
+                                <div class="input-group-append mx-2">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>
 
-        {% for tag in topico.tag.all %}
-            <span>{{tag}} </span>
-        {% endfor %}
-
-    
-    {% endfor %}
-</body>
-</html>
+<!-- Modal -->
+<div class="modal fade" id="topicoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Tópico</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url "new-topico" %}">
+                    {% csrf_token %}
+                    <div class="form-group my-2">
+                        <input type="text" class="form-control" id="titulo" name="titulo"  placeholder="Título">
+                    </div>
+                    <div class="form-group my-2">
+                        <textarea class="form-control" name="descricao" rows="4" placeholder="Descrição"></textarea>
+                    </div>
+                    <div class="form-group my-2">
+                        <input type="text" class="form-control" name="tags" placeholder="Tags">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}
